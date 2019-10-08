@@ -3,7 +3,7 @@ import VueAccessibleSelect from './components/VueAccessibleSelect/VueAccessibleS
 import config from './config'
 
 const Plugin = {
-  instal(Vue) {
+  install(Vue) {
     // Make sure that plugin can be installed only once
     if (this.installed) {
       return
