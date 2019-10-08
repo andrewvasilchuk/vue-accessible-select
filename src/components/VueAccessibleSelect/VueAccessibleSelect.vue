@@ -26,9 +26,9 @@
         span.v-select__selected
           slot(
             v-if="value !== undefined"
-            name="selected"
             :value="value"
             :option="currentOption"
+            name="selected"
             ) {{ currentOption ? currentOption.label : value }}
         span.v-select__arrow
           slot(name="arrow")
