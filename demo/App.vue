@@ -7,12 +7,35 @@
         <vue-accessible-select
           v-model="value"
           :options="options"
+          :disabled="disabled"
           label="Select"
           placeholder="Select"
-        ></vue-accessible-select>
-        <button>Send form</button>
+        >
+          <template v-slot:prepend>
+            <svg viewBox="0 0 54 54">
+              <path d="M27 1l8 17 19 3-14 13 4 19-17-9-17 9 3-19L0 21l19-3z" />
+            </svg>
+          </template>
+          <template v-slot:label>
+            <strong>😋 Just a label slot:</strong>
+          </template>
+          <template v-slot:placeholder>🎃 I am a placeholder slot</template>
+          <template v-slot:selected="{ value, option }">🔥 Woooow, {{ option.label }}</template>
+          <template v-slot:option="{ option }">{{ option.label }}.</template>
+        </vue-accessible-select>
       </form>
-      <output>{{ value }}</output>
+      <br />
+      <br />
+      <br />
+      <output>
+        <small>Value:</small>
+        <code>{{ value }}</code>
+      </output>
+      <br />
+      <label>
+        <small>Disabled:</small>
+        <input type="checkbox" v-model="disabled" />
+      </label>
     </section>
   </div>
 </template>
@@ -27,7 +50,7 @@ export default {
   },
   data() {
     return {
-      value: 0,
+      value: undefined,
       options: [
         {
           value: 0,
@@ -62,6 +85,7 @@ export default {
           label: 'Lorem ipsum dolor sit amet',
         },
       ],
+      disabled: false,
     }
   },
 }
@@ -80,6 +104,21 @@ html {
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+.v-select {
+  &__prepend {
+    flex-shrink: 0;
+    margin-right: 8px;
+
+    svg {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      fill: teal;
+    }
+  }
 }
 
 .fade-enter-active,
