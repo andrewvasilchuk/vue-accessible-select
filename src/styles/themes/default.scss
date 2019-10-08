@@ -1,0 +1,99 @@
+// v-select__label styles
+$v-select-label-display: inline-block !default;
+$v-select-label-margin-bottom: 8px !default;
+$v-select-label-font-size: 14px !default;
+
+// v-select__btn styles
+$v-select-btn-display: flex !default;
+$v-select-btn-width: 100% !default;
+$v-select-btn-height: 38px !default;
+$v-select-btn-horizontal-padding: 16px !default;
+$v-select-btn-vertical-padding: 0 !default;
+$v-select-btn-border-width: 1px !default;
+$v-select-btn-border-style: solid !default;
+$v-select-btn-border-color: #ced4da !default;
+$v-select-btn-border-radius: 4px !default;
+$v-select-btn-background-color: #fff !default;
+$v-select-btn-border-color-focus: #80bdff !default;
+$v-select-btn-box-shadow-focus: 0 0 0 4px rgba(0, 128, 255, 0.24) !default;
+$v-select-btn-font-size: 100% !default;
+
+// v-select__menu styles
+$v-select-menu-vertical-padding: 8px !default;
+$v-select-menu-border-width: 1px !default;
+$v-select-menu-border-style: solid !default;
+$v-select-menu-border-color: rgba(0, 0, 0, 0.15) !default;
+$v-select-menu-border-radius: 4px !default;
+$v-select-menu-background-color: #fff !default;
+
+// v-select__list styles
+$v-select-list-max-height: 160px !default;
+
+// v-select__option styles
+$v-select-option-padding: 4px 16px !default;
+$v-select-option-background-color-hover: #f8f9fa !default;
+$v-select-option-color-selected: #fff !default;
+$v-select-option-background-color-selected: #007bff !default;
+
+.v-select {
+  $block: &;
+
+  &__label {
+    display: $v-select-label-display;
+    margin-bottom: $v-select-label-margin-bottom;
+    font-size: $v-select-label-font-size;
+  }
+
+  &__btn {
+    display: $v-select-btn-display;
+    width: $v-select-btn-width;
+    height: $v-select-btn-height;
+    padding: $v-select-btn-vertical-padding $v-select-btn-horizontal-padding;
+    border: $v-select-btn-border-width $v-select-btn-border-style $v-select-btn-border-color;
+    border-radius: $v-select-btn-border-radius;
+    background-color: $v-select-btn-background-color;
+    font-size: $v-select-btn-font-size;
+
+    @if $v-select-btn-display == flex {
+      align-items: center;
+    }
+
+    &:focus {
+      outline: 0;
+      border-color: $v-select-btn-border-color-focus;
+      box-shadow: $v-select-btn-box-shadow-focus;
+    }
+  }
+
+  &__menu {
+    padding: {
+      top: $v-select-menu-vertical-padding;
+      bottom: $v-select-menu-vertical-padding;
+    }
+    border: $v-select-menu-border-width $v-select-menu-border-style $v-select-menu-border-color;
+    border-radius: $v-select-menu-border-radius;
+    background-color: $v-select-menu-background-color;
+  }
+
+  &__list {
+    max-height: $v-select-list-max-height;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  &__option {
+    padding: $v-select-option-padding;
+    cursor: pointer;
+
+    &:hover:not(#{$block}__option--selected) {
+      background-color: $v-select-option-background-color-hover;
+    }
+
+    &--selected {
+      background-color: $v-select-option-background-color-selected;
+      color: $v-select-option-color-selected;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+// v-select__menu styles
+$v-select-menu-position-top: 100% !default;
+
+// v-select__arrow styles
+$v-select-arrow-size: 8px !default;
+
+.v-select {
+  &__inner {
+    position: relative;
+  }
+
+  &__menu {
+    position: absolute;
+    top: $v-select-menu-position-top;
+    left: 0;
+    width: 100%;
+  }
+
+  &__list {
+    padding-left: 0;
+    margin: {
+      top: 0;
+      bottom: 0;
+    }
+    list-style: none;
+    overflow: auto;
+  }
+  
+  &__arrow {
+    margin-left: auto;
+
+    svg {
+      display: inline-block;
+      width: $v-select-arrow-size;
+      height: $v-select-arrow-size;
+      vertical-align: middle;
+    }
+  }
+}
