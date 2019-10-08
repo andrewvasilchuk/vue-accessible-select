@@ -88,7 +88,6 @@ export default {
     transition: {
       type: Object,
       default: () => config.transition || {},
-      validator: val => 'name' in val,
     },
     label: String,
     placeholder: String,
