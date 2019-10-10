@@ -15,6 +15,7 @@
         type="button"
         aria-haspopup="listbox"
         @click="toggle"
+        @blur="buttonBlurHandler"
         )
         span.v-select__prepend(v-if="hasSlot('prepend')")
           slot(name="prepend")
@@ -51,7 +52,7 @@
             @keyup.36="setFirstSelected"
             @keyup.esc="escapeHandler"
             @keyup="printHandler"
-            @blur="blurHandler"
+            @blur="menuBlurHandler"
             )
             li.v-select__option(
               v-for="(option, index) in options" :key="index"
@@ -100,7 +101,7 @@ export default {
       open: false,
       timeout: null,
       printedText: '',
-      localId_: _uid
+      localId_: _uid,
     }
   },
   computed: {
@@ -282,8 +283,15 @@ export default {
         }
       }
     },
-    blurHandler(e) {
-      this.open = false
+    buttonBlurHandler(e) {
+      if (e.relatedTarget !== this.$refs.list && this.open) {
+        this.open = false
+      }
+    },
+    menuBlurHandler(e) {
+      if (e.relatedTarget !== this.$refs.button) {
+        this.open = false
+      }
     },
     hasSlot(name) {
       return Boolean(this.$slots[name]) || Boolean(this.$scopedSlots[name])
