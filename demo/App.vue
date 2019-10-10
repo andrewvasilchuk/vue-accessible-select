@@ -26,16 +26,30 @@
       </form>
       <br />
       <br />
-      <br />
       <output>
-        <small>Value:</small>
+        <span class="tag" style="margin-right: 4px;">Value:</span>
         <code>{{ value }}</code>
       </output>
       <br />
       <label>
-        <small>Disabled:</small>
+        <span class="tag">Disabled:</span>
         <input type="checkbox" v-model="disabled" />
       </label>
+      <h3>Here is some useful keys and their appropriate actions:</h3>
+      <ul>
+        <li>
+          <code>Down Arrow</code> – Moves focus and selection to the next option.
+        </li>
+        <li>
+          <code>Up Arrow</code> – Moves focus and selection to the previous option.
+        </li>
+        <li>
+          <code>Home</code> – Moves focus and selection to the first option.
+        </li>
+        <li>
+          <code>End</code> – Moves focus and selection to the last option.
+        </li>
+      </ul>
     </section>
   </div>
 </template>
@@ -127,5 +141,30 @@ html {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+// bulma styles
+code {
+  padding: 0.25em 0.5em 0.25em;
+  background-color: #f5f5f5;
+  color: #ff3860;
+  font-size: 0.875em;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2em;
+  padding: {
+    right: 0.75em;
+    left: 0.75em;
+  }
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  color: #4a4a4a;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  white-space: nowrap;
 }
 </style>
