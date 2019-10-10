@@ -94,18 +94,21 @@ export default {
     disabled: Boolean,
   },
   data() {
+    const { _uid } = this
+
     return {
       open: false,
       timeout: null,
       printedText: '',
+      localId_: _uid
     }
   },
   computed: {
     labelId() {
-      return this.label ? `v-select-label-${this._uid}` : false
+      return this.label ? `v-select-label-${this.localId_}` : false
     },
     buttonId() {
-      return `v-select-button-${this._uid}`
+      return `v-select-button-${this.localId_}`
     },
     ariaExpanded() {
       return this.open ? 'true' : false
@@ -159,6 +162,18 @@ export default {
       }
     },
   },
+  /*
+   * SSR Safe Client Side ID attribute generation
+   * id's can only be generated client side, after mount.
+   * this._uid is not synched between server and client.
+   */
+  mounted() {
+    this.$nextTick(() => {
+      // Update dom with auto ID after dom loaded to prevent
+      // SSR hydration errors.
+      this.localId_ = this._uid
+    })
+  },
   methods: {
     toggle() {
       this.open = !this.open
@@ -182,11 +197,11 @@ export default {
     },
     keydownHandler(e) {
       // prevent from default scrolling
-      
+
       if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
         e.preventDefault()
       }
-      
+
       const { currentOptionIndex } = this
       // if neither option is selected then select the first
 
@@ -212,7 +227,7 @@ export default {
       }
     },
     getOptionId(option) {
-      return `v-select-option-${this.options.indexOf(option)}_${this._uid}`
+      return `v-select-option-${this.options.indexOf(option)}_${this.localId_}`
     },
     setFirstSelected() {
       this.$emit('input', this.options[0].value)
