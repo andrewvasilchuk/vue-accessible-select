@@ -5,7 +5,7 @@
 ## ✨ Features
 
 - fully accessible;
-- ⌨️ keyboard navigation (`Page Up/Down`, `Home`, `End`);
+- ⌨️ keyboard navigation (`Page Up/Down`, `Home`, `End`, `Esc`);
 - 🔣 type-ahead to select option that starts with typed symbols;
 - 💅 style agnostic, so you can style it whatever you like (but including `core.scss` is highly encouraged).
 
@@ -238,6 +238,7 @@ Here is some useful keys and their appropriate actions:
 - `Up Arrow` – Moves focus and selection to the previous option.
 - `Home` – Moves focus and selection to the first option.
 - `End` – Moves focus and selection to the last option.
+- `Esc` – Closes menu.
 
 Type ahead:
 
