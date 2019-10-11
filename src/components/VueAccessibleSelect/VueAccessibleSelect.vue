@@ -222,6 +222,7 @@ export default {
           break
         case 13:
           setTimeout(() => {
+            this.open = false
             this.$refs.button.focus()
           }, 0)
           break
