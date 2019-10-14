@@ -181,7 +181,7 @@ $v-select-arrow-size: 8px !default;
 | Prop                  | Description                                                                                                                                                        |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `options: array`      | `required` Array of select options. Should be an array of objects that match the following pattern `{ value: any, label: string }`                                 |
-| `value: any`          | `required` Current value of select. When value in `undefined`, it is considered that select has no current value.                                                  |
+| `value: any`          | `required` Current value of select. When value is `undefined`, it is considered that select has no current value.                                                  |
 | `label: string`       | Select label                                                                                                                                                       |
 | `placeholder: string` | Select placeholder                                                                                                                                                 |
 | `disabled: boolean`   | Whether select is disabled                                                                                                                                         |
