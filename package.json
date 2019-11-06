@@ -28,6 +28,7 @@
   "main": "dist/vue-accessible-select.js",
   "unpkg": "dist/vue-accessible-select.min.js",
   "module": "dist/vue-accessible-select.esm.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "rimraf dist/* && rollup -c build/rollup.config.prod.js && npm run build:css && npm run postcss",
     "build:css": "node-sass ./src -o ./dist --output-style compressed -x",
