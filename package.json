@@ -4,11 +4,11 @@
   "private": false,
   "description": "Vue.js component for accessible selects",
   "keywords": [
-    "select",
-    "vue-select",
-    "vue-accessible-select",
     "accessibility",
-    "vue"
+    "select",
+    "vue",
+    "vue-accessible-select",
+    "vue-select"
   ],
   "homepage": "https://github.com/andrewvasilchuk/vue-accessible-select#readme",
   "bugs": {
