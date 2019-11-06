@@ -30,6 +30,7 @@
   "module": "dist/vue-accessible-select.esm.js",
   "types": "types/index.d.ts",
   "scripts": {
+    "prepare": "npm run build",
     "build": "rimraf dist/* && rollup -c build/rollup.config.prod.js && npm run build:css && npm run postcss",
     "build:css": "node-sass ./src -o ./dist --output-style compressed -x",
     "dev": "rollup -c build/rollup.config.dev.js --watch",
