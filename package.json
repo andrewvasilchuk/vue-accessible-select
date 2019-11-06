@@ -22,7 +22,8 @@
   "author": "Andrew Vasilchuk <andrew.d.vasilchuk@gmail.com>",
   "files": [
     "src",
-    "dist"
+    "dist",
+    "types/*.d.ts"
   ],
   "main": "dist/vue-accessible-select.js",
   "unpkg": "dist/vue-accessible-select.min.js",
