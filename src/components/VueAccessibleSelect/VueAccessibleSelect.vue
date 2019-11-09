@@ -19,14 +19,14 @@
         )
         span.v-select__prepend(v-if="hasSlot('prepend')")
           slot(name="prepend")
-        span.v-select__placeholder(v-if="(placeholder || hasSlot('placeholder')) && value === undefined")
+        span.v-select__placeholder(v-if="(placeholder || hasSlot('placeholder')) && value === undefined || !optionsHasValue")
           slot(
             name="placeholder"
             :placeholder="placeholder"
             ) {{ placeholder }}
         span.v-select__selected
           slot(
-            v-if="value !== undefined"
+            v-if="value !== undefined && optionsHasValue"
             :value="value"
             :option="currentOption"
             name="selected"
@@ -129,6 +129,9 @@ export default {
     currentOptionIndex() {
       return this.options.findIndex(option => option === this.currentOption)
     },
+    optionsHasValue() {
+      return this.options.findIndex(option => option.value === this.value) !== -1
+    }
   },
   watch: {
     open(val) {
