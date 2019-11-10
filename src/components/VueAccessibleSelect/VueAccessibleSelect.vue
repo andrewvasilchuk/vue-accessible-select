@@ -182,6 +182,10 @@ export default {
     toggle() {
       this.open = !this.open
     },
+    emit(val) {
+      this.$emit('input', val)
+      this.$emit('change', val)
+    },
     clickListener(e) {
       const { target } = e
       const closestBtn = target.closest('.v-select__btn')
@@ -196,7 +200,7 @@ export default {
       return this.value === option.value
     },
     clickHandler(option) {
-      this.$emit('input', option.value)
+      this.emit(option.value)
       this.open = false
     },
     keydownHandler(e) {
@@ -210,18 +214,18 @@ export default {
       // if neither option is selected then select the first
 
       if (currentOptionIndex === -1) {
-        this.$emit('input', this.options[0].value)
+        this.emit(this.options[0].value)
         return
       }
 
       switch (e.keyCode) {
         case 38:
           if (currentOptionIndex !== 0)
-            this.$emit('input', this.options[currentOptionIndex - 1].value)
+            this.emit(this.options[currentOptionIndex - 1].value)
           break
         case 40:
           if (currentOptionIndex !== this.options.length - 1)
-            this.$emit('input', this.options[currentOptionIndex + 1].value)
+            this.$emit(this.options[currentOptionIndex + 1].value)
           break
         case 13:
           setTimeout(() => {
@@ -235,10 +239,10 @@ export default {
       return `v-select-option-${this.options.indexOf(option)}_${this.localId_}`
     },
     setFirstSelected() {
-      this.$emit('input', this.options[0].value)
+      this.$emit(this.options[0].value)
     },
     setLastSelected() {
-      this.$emit('input', this.options[this.options.length - 1].value)
+      this.$emit(this.options[this.options.length - 1].value)
     },
     escapeHandler() {
       this.open = false
@@ -262,7 +266,7 @@ export default {
             .toUpperCase()
             .startsWith(text)
         ) {
-          this.$emit('input', option.value)
+          this.emit(option.value)
           return
         }
       }
