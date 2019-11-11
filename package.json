@@ -37,7 +37,9 @@
     "postcss": "postcss ./dist/**/*.css -r --no-map",
     "test:unit": "jest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "pug": "^2.0.4"
+  },
   "devDependencies": {
     "@babel/core": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
