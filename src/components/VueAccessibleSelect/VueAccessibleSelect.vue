@@ -225,7 +225,7 @@ export default {
           break
         case 40:
           if (currentOptionIndex !== this.options.length - 1)
-            this.$emit(this.options[currentOptionIndex + 1].value)
+            this.emit(this.options[currentOptionIndex + 1].value)
           break
         case 13:
           setTimeout(() => {
@@ -239,10 +239,10 @@ export default {
       return `v-select-option-${this.options.indexOf(option)}_${this.localId_}`
     },
     setFirstSelected() {
-      this.$emit(this.options[0].value)
+      this.emit(this.options[0].value)
     },
     setLastSelected() {
-      this.$emit(this.options[this.options.length - 1].value)
+      this.emit(this.options[this.options.length - 1].value)
     },
     escapeHandler() {
       this.open = false
