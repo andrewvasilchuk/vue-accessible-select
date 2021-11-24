@@ -253,7 +253,10 @@ export default {
       this.$refs.button.focus()
     },
     printHandler(e) {
-      this.printedText += String.fromCharCode(e.keyCode)
+      const newChar = e.key ? e.key : String.fromCharCode(e.keyCode)
+      if (newChar.length > 1) return
+
+      this.printedText += newChar.toUpperCase()
 
       this.selectByText(this.printedText)
 
