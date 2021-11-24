@@ -261,13 +261,17 @@ export default {
       this.selectByText(this.printedText)
 
       clearTimeout(this.timeout)
+      this.timeout = null
 
       this.timeout = setTimeout(() => {
         this.printedText = ''
       }, 500)
     },
     selectByText(text) {
-      for (let option of this.options) {
+      const { options, value } = this
+      const selectedIndex = options.findIndex(o => o.value === value)
+
+      for (let option of this.shiftOptions(selectedIndex)) {
         if (
           String(option.label)
             .toUpperCase()
@@ -310,6 +314,21 @@ export default {
     },
     hasSlot(name) {
       return Boolean(this.$slots[name]) || Boolean(this.$scopedSlots[name])
+    },
+    shiftOptions(selectedIndex) {
+      const { options } = this
+
+      if (selectedIndex === -1 || this.timeout) {
+        return options
+      }
+
+      const optionsBeforeSelected = options.slice(0, selectedIndex - 1)
+      const optionsAfterSelected = options.slice(
+        selectedIndex + 1,
+        options.length
+      )
+
+      return [...optionsAfterSelected, ...optionsBeforeSelected]
     },
   },
 }
