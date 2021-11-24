@@ -16,6 +16,7 @@
         aria-haspopup="listbox"
         @click="toggle"
         @blur="buttonBlurHandler"
+        @keydown="keydownHandler"
         )
         span.v-select__prepend(v-if="hasSlot('prepend')")
           slot(name="prepend")
@@ -51,7 +52,6 @@
             @keyup.35="setLastSelected"
             @keyup.36="setFirstSelected"
             @keyup.esc="escapeHandler"
-            @keyup="printHandler"
             @blur="menuBlurHandler"
             )
             li.v-select__option(
@@ -210,30 +210,34 @@ export default {
         e.preventDefault()
       }
 
-      const { currentOptionIndex } = this
-      // if neither option is selected then select the first
-
-      if (currentOptionIndex === -1) {
-        this.emit(this.options[0].value)
-        return
-      }
+      const { currentOptionIndex, open } = this
 
       switch (e.keyCode) {
         case 38:
-          if (currentOptionIndex !== 0)
+          if (!open) {
+            return this.toggle()
+          }
+
+          if (currentOptionIndex > 0)
             this.emit(this.options[currentOptionIndex - 1].value)
-          break
+          return
         case 40:
+          if (!open) {
+            return this.toggle()
+          }
+
           if (currentOptionIndex !== this.options.length - 1)
             this.emit(this.options[currentOptionIndex + 1].value)
-          break
+          return
         case 13:
           setTimeout(() => {
             this.open = false
             this.$refs.button.focus()
           }, 0)
-          break
+          return
       }
+
+      this.printHandler(e)
     },
     getOptionId(option) {
       return `v-select-option-${this.options.indexOf(option)}_${this.localId_}`
