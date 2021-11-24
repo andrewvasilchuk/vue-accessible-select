@@ -62,7 +62,7 @@
               @click="clickHandler(option)" :aria-selected="isSelected(option) ? 'true': 'false'"
               )
               slot(
-                name="option" 
+                name="option"
                 :option="option"
                 :value="value"
                 )
@@ -130,8 +130,10 @@ export default {
       return this.options.findIndex(option => option === this.currentOption)
     },
     optionsHasValue() {
-      return this.options.findIndex(option => option.value === this.value) !== -1
-    }
+      return (
+        this.options.findIndex(option => option.value === this.value) !== -1
+      )
+    },
   },
   watch: {
     open(val) {
@@ -268,10 +270,7 @@ export default {
       }, 500)
     },
     selectByText(text) {
-      const { options, value } = this
-      const selectedIndex = options.findIndex(o => o.value === value)
-
-      for (let option of this.shiftOptions(selectedIndex)) {
+      for (let option of this.shiftOptions(this.currentOptionIndex)) {
         if (
           String(option.label)
             .toUpperCase()
