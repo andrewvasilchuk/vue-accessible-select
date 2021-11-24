@@ -16,6 +16,7 @@
         aria-haspopup="listbox"
         @click="toggle"
         @blur="buttonBlurHandler"
+        @keydown="keydownHandler"
         )
         span.v-select__prepend(v-if="hasSlot('prepend')")
           slot(name="prepend")
@@ -51,7 +52,6 @@
             @keyup.35="setLastSelected"
             @keyup.36="setFirstSelected"
             @keyup.esc="escapeHandler"
-            @keyup="printHandler"
             @blur="menuBlurHandler"
             )
             li.v-select__option(
@@ -62,7 +62,7 @@
               @click="clickHandler(option)" :aria-selected="isSelected(option) ? 'true': 'false'"
               )
               slot(
-                name="option" 
+                name="option"
                 :option="option"
                 :value="value"
                 )
@@ -130,8 +130,10 @@ export default {
       return this.options.findIndex(option => option === this.currentOption)
     },
     optionsHasValue() {
-      return this.options.findIndex(option => option.value === this.value) !== -1
-    }
+      return (
+        this.options.findIndex(option => option.value === this.value) !== -1
+      )
+    },
   },
   watch: {
     open(val) {
@@ -210,30 +212,34 @@ export default {
         e.preventDefault()
       }
 
-      const { currentOptionIndex } = this
-      // if neither option is selected then select the first
-
-      if (currentOptionIndex === -1) {
-        this.emit(this.options[0].value)
-        return
-      }
+      const { currentOptionIndex, open } = this
 
       switch (e.keyCode) {
         case 38:
-          if (currentOptionIndex !== 0)
+          if (!open) {
+            return this.toggle()
+          }
+
+          if (currentOptionIndex > 0)
             this.emit(this.options[currentOptionIndex - 1].value)
-          break
+          return
         case 40:
+          if (!open) {
+            return this.toggle()
+          }
+
           if (currentOptionIndex !== this.options.length - 1)
             this.emit(this.options[currentOptionIndex + 1].value)
-          break
+          return
         case 13:
           setTimeout(() => {
             this.open = false
             this.$refs.button.focus()
           }, 0)
-          break
+          return
       }
+
+      this.printHandler(e)
     },
     getOptionId(option) {
       return `v-select-option-${this.options.indexOf(option)}_${this.localId_}`
@@ -249,18 +255,22 @@ export default {
       this.$refs.button.focus()
     },
     printHandler(e) {
-      this.printedText += String.fromCharCode(e.keyCode)
+      const newChar = e.key ? e.key : String.fromCharCode(e.keyCode)
+      if (newChar.length > 1) return
+
+      this.printedText += newChar.toUpperCase()
 
       this.selectByText(this.printedText)
 
       clearTimeout(this.timeout)
+      this.timeout = null
 
       this.timeout = setTimeout(() => {
         this.printedText = ''
       }, 500)
     },
     selectByText(text) {
-      for (let option of this.options) {
+      for (let option of this.shiftOptions(this.currentOptionIndex)) {
         if (
           String(option.label)
             .toUpperCase()
@@ -303,6 +313,21 @@ export default {
     },
     hasSlot(name) {
       return Boolean(this.$slots[name]) || Boolean(this.$scopedSlots[name])
+    },
+    shiftOptions(selectedIndex) {
+      const { options } = this
+
+      if (selectedIndex === -1 || this.timeout) {
+        return options
+      }
+
+      const optionsBeforeSelected = options.slice(0, selectedIndex - 1)
+      const optionsAfterSelected = options.slice(
+        selectedIndex + 1,
+        options.length
+      )
+
+      return [...optionsAfterSelected, ...optionsBeforeSelected]
     },
   },
 }
