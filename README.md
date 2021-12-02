@@ -9,22 +9,18 @@
 - 🔣 type-ahead to select option that starts with typed symbols;
 - 💅 style agnostic, so you can style it whatever you like (but including `core.scss` is highly encouraged).
 
-## Demo
-
-[![Edit vue-accessible-select](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/vue-accessible-select-qse3r?fontsize=14)
-
 ## 💿 Installation
 
 ### 📦 Via NPM
 
 ```bash
-$ npm install vue-accessible-select --save
+$ npm install @jonasclement/vue-accessible-select --save
 ```
 
 ### 🧶 Via Yarn
 
 ```bash
-$ yarn add vue-accessible-select
+$ yarn add @jonasclement/vue-accessible-select
 ```
 
 ## Initialization

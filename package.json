@@ -1,5 +1,5 @@
 {
-  "name": "vue-accessible-select",
+  "name": "@jonasclement/vue-accessible-select",
   "version": "1.1.4",
   "private": false,
   "description": "Vue.js component for accessible selects",
@@ -10,13 +10,13 @@
     "vue-accessible-select",
     "vue-select"
   ],
-  "homepage": "https://github.com/andrewvasilchuk/vue-accessible-select#readme",
+  "homepage": "https://github.com/jonasclement/vue-accessible-select#readme",
   "bugs": {
-    "url": "https://github.com/andrewvasilchuk/vue-accessible-select/issues"
+    "url": "https://github.com/jonasclement/vue-accessible-select/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/andrewvasilchuk/vue-accessible-select"
+    "url": "https://github.com/jonasclement/vue-accessible-select"
   },
   "license": "MIT",
   "author": "Andrew Vasilchuk <andrew.d.vasilchuk@gmail.com>",
