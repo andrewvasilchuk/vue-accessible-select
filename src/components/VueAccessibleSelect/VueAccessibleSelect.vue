@@ -62,7 +62,7 @@
               @click="clickHandler(option)" :aria-selected="isSelected(option) ? 'true': 'false'"
               )
               slot(
-                name="option" 
+                name="option"
                 :option="option"
                 :value="value"
                 )
@@ -112,7 +112,7 @@ export default {
       return `v-select-button-${this.localId_}`
     },
     ariaExpanded() {
-      return this.open ? 'true' : false
+      return this.open ? 'true' : 'false'
     },
     className() {
       return {
@@ -130,8 +130,10 @@ export default {
       return this.options.findIndex(option => option === this.currentOption)
     },
     optionsHasValue() {
-      return this.options.findIndex(option => option.value === this.value) !== -1
-    }
+      return (
+        this.options.findIndex(option => option.value === this.value) !== -1
+      )
+    },
   },
   watch: {
     open(val) {
