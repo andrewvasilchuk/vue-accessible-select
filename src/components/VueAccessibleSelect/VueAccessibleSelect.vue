@@ -215,6 +215,7 @@ export default {
       const { currentOptionIndex, open } = this
 
       switch (e.keyCode) {
+        // Arrow up
         case 38:
           if (!open) {
             return this.toggle()
@@ -223,6 +224,7 @@ export default {
           if (currentOptionIndex > 0)
             this.emit(this.options[currentOptionIndex - 1].value)
           return
+        // Arrow down
         case 40:
           if (!open) {
             return this.toggle()
@@ -231,6 +233,7 @@ export default {
           if (currentOptionIndex !== this.options.length - 1)
             this.emit(this.options[currentOptionIndex + 1].value)
           return
+        // Enter
         case 13:
           setTimeout(() => {
             this.open = false
