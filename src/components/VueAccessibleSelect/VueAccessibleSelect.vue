@@ -221,24 +221,22 @@ export default {
           break
         // Arrow up
         case 38:
-          if (!open) {
-            return this.toggle()
-          }
+          if (!open) return (this.open = true)
 
           if (currentOptionIndex > 0)
             this.emit(this.options[currentOptionIndex - 1].value)
           return
         // Arrow down
         case 40:
-          if (!open) {
-            return this.toggle()
-          }
+          if (!open) return (this.open = true)
 
           if (currentOptionIndex !== this.options.length - 1)
             this.emit(this.options[currentOptionIndex + 1].value)
           return
         // Enter
         case 13:
+          if (!this.open) return
+
           setTimeout(() => {
             this.open = false
             this.$refs.button.focus()
