@@ -215,6 +215,10 @@ export default {
       const { currentOptionIndex, open } = this
 
       switch (e.keyCode) {
+        // Space
+        case 32:
+          if (!this.open) return (this.open = true)
+          break
         // Arrow up
         case 38:
           if (!open) {
