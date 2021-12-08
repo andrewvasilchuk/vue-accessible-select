@@ -112,7 +112,7 @@ export default {
       return `v-select-button-${this.localId_}`
     },
     ariaExpanded() {
-      return this.open ? 'true' : false
+      return this.open ? 'true' : 'false'
     },
     className() {
       return {
