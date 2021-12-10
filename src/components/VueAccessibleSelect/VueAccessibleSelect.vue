@@ -134,6 +134,24 @@ export default {
         this.options.findIndex(option => option.value === this.value) !== -1
       )
     },
+    /** this.options, shifed to have the element after the selected one first */
+    shiftedOptions() {
+      if (this.currentOptionIndex === -1) {
+        return this.options
+      }
+
+      const beforeSelected = this.options.slice(0, this.currentOptionIndex - 1)
+      const afterSelected = this.options.slice(
+        this.currentOptionIndex + 1,
+        this.options.length
+      )
+
+      const options = [...afterSelected, ...beforeSelected]
+
+      if (this.timeout) options.unshift(this.currentOption)
+
+      return options
+    },
   },
   watch: {
     open(val) {
@@ -267,15 +285,14 @@ export default {
 
       this.selectByText(this.printedText)
 
-      clearTimeout(this.timeout)
-      this.timeout = null
-
       this.timeout = setTimeout(() => {
         this.printedText = ''
+        clearTimeout(this.timeout)
+        this.timeout = null
       }, 500)
     },
     selectByText(text) {
-      for (let option of this.shiftOptions(this.currentOptionIndex)) {
+      for (let option of this.shiftedOptions) {
         if (
           String(option.label)
             .toUpperCase()
@@ -318,21 +335,6 @@ export default {
     },
     hasSlot(name) {
       return Boolean(this.$slots[name]) || Boolean(this.$scopedSlots[name])
-    },
-    shiftOptions(selectedIndex) {
-      const { options } = this
-
-      if (selectedIndex === -1 || this.timeout) {
-        return options
-      }
-
-      const optionsBeforeSelected = options.slice(0, selectedIndex - 1)
-      const optionsAfterSelected = options.slice(
-        selectedIndex + 1,
-        options.length
-      )
-
-      return [...optionsAfterSelected, ...optionsBeforeSelected]
     },
   },
 }
