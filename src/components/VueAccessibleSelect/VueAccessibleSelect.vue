@@ -16,6 +16,7 @@
         aria-haspopup="listbox"
         @click="toggle"
         @blur="buttonBlurHandler"
+        @keydown="keydownHandler"
         )
         span.v-select__prepend(v-if="hasSlot('prepend')")
           slot(name="prepend")
@@ -51,7 +52,6 @@
             @keyup.35="setLastSelected"
             @keyup.36="setFirstSelected"
             @keyup.esc="escapeHandler"
-            @keyup="printHandler"
             @blur="menuBlurHandler"
             )
             li.v-select__option(
@@ -134,6 +134,24 @@ export default {
         this.options.findIndex(option => option.value === this.value) !== -1
       )
     },
+    /** this.options, shifed to have the element after the selected one first */
+    shiftedOptions() {
+      if (this.currentOptionIndex === -1) {
+        return this.options
+      }
+
+      const beforeSelected = this.options.slice(0, this.currentOptionIndex - 1)
+      const afterSelected = this.options.slice(
+        this.currentOptionIndex + 1,
+        this.options.length
+      )
+
+      const options = [...afterSelected, ...beforeSelected]
+
+      if (this.timeout) options.unshift(this.currentOption)
+
+      return options
+    },
   },
   watch: {
     open(val) {
@@ -212,30 +230,39 @@ export default {
         e.preventDefault()
       }
 
-      const { currentOptionIndex } = this
-      // if neither option is selected then select the first
-
-      if (currentOptionIndex === -1) {
-        this.emit(this.options[0].value)
-        return
-      }
+      const { currentOptionIndex, open } = this
 
       switch (e.keyCode) {
-        case 38:
-          if (currentOptionIndex !== 0)
-            this.emit(this.options[currentOptionIndex - 1].value)
+        // Space
+        case 32:
+          if (!this.open) return (this.open = true)
           break
+        // Arrow up
+        case 38:
+          if (!open) return (this.open = true)
+
+          if (currentOptionIndex > 0)
+            this.emit(this.options[currentOptionIndex - 1].value)
+          return
+        // Arrow down
         case 40:
+          if (!open) return (this.open = true)
+
           if (currentOptionIndex !== this.options.length - 1)
             this.emit(this.options[currentOptionIndex + 1].value)
-          break
+          return
+        // Enter
         case 13:
+          if (!this.open) return
+
           setTimeout(() => {
             this.open = false
             this.$refs.button.focus()
           }, 0)
-          break
+          return
       }
+
+      this.printHandler(e)
     },
     getOptionId(option) {
       return `v-select-option-${this.options.indexOf(option)}_${this.localId_}`
@@ -251,18 +278,21 @@ export default {
       this.$refs.button.focus()
     },
     printHandler(e) {
-      this.printedText += String.fromCharCode(e.keyCode)
+      const newChar = e.key ? e.key : String.fromCharCode(e.keyCode)
+      if (newChar.length > 1) return
+
+      this.printedText += newChar.toUpperCase()
 
       this.selectByText(this.printedText)
 
-      clearTimeout(this.timeout)
-
       this.timeout = setTimeout(() => {
         this.printedText = ''
+        clearTimeout(this.timeout)
+        this.timeout = null
       }, 500)
     },
     selectByText(text) {
-      for (let option of this.options) {
+      for (let option of this.shiftedOptions) {
         if (
           String(option.label)
             .toUpperCase()
@@ -294,15 +324,19 @@ export default {
       }
     },
     buttonBlurHandler(e) {
-      let target = e.relatedTarget;
-      if (target === null) { target = document.activeElement; }
+      let target = e.relatedTarget
+      if (target === null) {
+        target = document.activeElement
+      }
       if (target !== this.$refs.list && this.open) {
         this.open = false
       }
     },
     menuBlurHandler(e) {
-      let target = e.relatedTarget;
-      if (target === null) { target = document.activeElement; }
+      let target = e.relatedTarget
+      if (target === null) {
+        target = document.activeElement
+      }
       if (target !== this.$refs.button) {
         this.open = false
       }
