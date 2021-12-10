@@ -151,7 +151,7 @@ export default {
       if (this.timeout) options.unshift(this.currentOption)
 
       return options
-   
+    },
   },
   watch: {
     open(val) {
@@ -324,15 +324,19 @@ export default {
       }
     },
     buttonBlurHandler(e) {
-      let target = e.relatedTarget;
-      if (target === null) { target = document.activeElement; }
+      let target = e.relatedTarget
+      if (target === null) {
+        target = document.activeElement
+      }
       if (target !== this.$refs.list && this.open) {
         this.open = false
       }
     },
     menuBlurHandler(e) {
-      let target = e.relatedTarget;
-      if (target === null) { target = document.activeElement; }
+      let target = e.relatedTarget
+      if (target === null) {
+        target = document.activeElement
+      }
       if (target !== this.$refs.button) {
         this.open = false
       }
