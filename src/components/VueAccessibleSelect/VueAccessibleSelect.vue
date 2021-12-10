@@ -112,7 +112,7 @@ export default {
       return `v-select-button-${this.localId_}`
     },
     ariaExpanded() {
-      return this.open ? 'true' : false
+      return this.open ? 'true' : 'false'
     },
     className() {
       return {
@@ -151,7 +151,7 @@ export default {
       if (this.timeout) options.unshift(this.currentOption)
 
       return options
-    },
+   
   },
   watch: {
     open(val) {
@@ -324,12 +324,16 @@ export default {
       }
     },
     buttonBlurHandler(e) {
-      if (e.relatedTarget !== this.$refs.list && this.open) {
+      let target = e.relatedTarget;
+      if (target === null) { target = document.activeElement; }
+      if (target !== this.$refs.list && this.open) {
         this.open = false
       }
     },
     menuBlurHandler(e) {
-      if (e.relatedTarget !== this.$refs.button) {
+      let target = e.relatedTarget;
+      if (target === null) { target = document.activeElement; }
+      if (target !== this.$refs.button) {
         this.open = false
       }
     },
