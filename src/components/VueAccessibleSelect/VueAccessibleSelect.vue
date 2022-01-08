@@ -74,6 +74,16 @@
 </template>
 
 <script>
+import {
+  KEY_RETURN,
+  KEY_ESCAPE,
+  KEY_SPACE,
+  KEY_LEFT,
+  KEY_UP,
+  KEY_RIGHT,
+  KEY_DOWN,
+} from 'keycode-js'
+
 import config from '../../config'
 
 export default {
@@ -206,9 +216,15 @@ export default {
       this.open = false
     },
     keydownHandler(e) {
+      if (e.keyCode === KEY_ESCAPE) {
+        return
+      }
       // prevent from default scrolling
 
-      if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+      if (
+        [KEY_SPACE, KEY_LEFT, KEY_UP, KEY_RIGHT, KEY_DOWN].indexOf(e.keyCode) >
+        -1
+      ) {
         e.preventDefault()
       }
 
@@ -221,15 +237,15 @@ export default {
       }
 
       switch (e.keyCode) {
-        case 38:
+        case KEY_UP:
           if (currentOptionIndex !== 0)
             this.emit(this.options[currentOptionIndex - 1].value)
           break
-        case 40:
+        case KEY_DOWN:
           if (currentOptionIndex !== this.options.length - 1)
             this.emit(this.options[currentOptionIndex + 1].value)
           break
-        case 13:
+        case KEY_RETURN:
           setTimeout(() => {
             this.open = false
             this.$refs.button.focus()
