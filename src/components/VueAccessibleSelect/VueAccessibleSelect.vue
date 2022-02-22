@@ -69,7 +69,7 @@
                 span {{ option.label }}
           template(v-else)
             .v-select__no-options
-              slot(name="no-optioms")
+              slot(name="no-options")
                 span No options provided
 </template>
 
