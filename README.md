@@ -240,6 +240,10 @@ Type ahead:
 - Type a character: focus and selection moves to the next option with a label that starts with the typed character;
 - Type multiple characters in rapid succession: focus and selection moves to the next option with a label that starts with the string of characters typed.
 
+## Note for developers
+
+For this Vue 3-compatible version, the demo does not build correctly.
+
 ## Powered by
 
 - `Vite`;
