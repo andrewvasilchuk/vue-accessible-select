@@ -243,8 +243,8 @@ Type ahead:
 
 ## Powered by
 
-- `Rollup` (and plugins);
-- `SASS` and `node-sass`;
+- `Vite`;
+- `SASS`
 - `PostCSS`;
 - `Autoprefixer`.
 
