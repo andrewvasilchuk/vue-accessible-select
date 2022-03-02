@@ -1,76 +1,76 @@
 <template lang="pug">
-  .v-select(:class="className")
-    span.v-select__label(
-      v-if="hasSlot('label') || label"
-      :id="labelId"
+.v-select(:class="className")
+  span.v-select__label(
+    v-if="hasSlot('label') || label"
+    :id="labelId"
+    )
+    slot(name="label") {{ label }}:
+  .v-select__inner
+    button.v-select__btn(
+      :id="buttonId"
+      ref="button"
+      :disabled="disabled"
+      :aria-expanded="ariaExpanded"
+      :aria-labelledby="`${labelId ? labelId : ''} ${buttonId}`"
+      type="button"
+      aria-haspopup="listbox"
+      @click="toggle"
+      @blur="buttonBlurHandler"
+      @keydown="keydownHandler"
       )
-      slot(name="label") {{ label }}:
-    .v-select__inner
-      button.v-select__btn(
-        :id="buttonId"
-        ref="button"
-        :disabled="disabled"
-        :aria-expanded="ariaExpanded"
-        :aria-labelledby="`${labelId ? labelId : ''} ${buttonId}`"
-        type="button"
-        aria-haspopup="listbox"
-        @click="toggle"
-        @blur="buttonBlurHandler"
-        @keydown="keydownHandler"
-        )
-        span.v-select__prepend(v-if="hasSlot('prepend')")
-          slot(name="prepend")
-        span.v-select__placeholder(v-if="(placeholder || hasSlot('placeholder')) && value === undefined || !optionsHasValue")
-          slot(
-            name="placeholder"
-            :placeholder="placeholder"
-            ) {{ placeholder }}
-        span.v-select__selected
-          slot(
-            v-if="value !== undefined && optionsHasValue"
-            :value="value"
-            :option="currentOption"
-            name="selected"
-            ) {{ currentOption ? currentOption.label : value }}
-        span.v-select__arrow
-          slot(name="arrow")
-            svg(viewBox="0 0 255 255")
-              path(d="M0 64l128 127L255 64z")
-      transition(
-        :name="transition ? transition.name : ''"
-        :mode="transition ? transition.mode : ''"
-        )
-        .v-select__menu(v-if="open")
-          ul.v-select__list(
-            v-if="options && options.length"
-            ref="list"
-            :aria-activedescendant="value && getOptionId(value)"
-            :aria-labelledby="labelId"
-            role="listbox"
-            tabindex="-1"
-            @keydown="keydownHandler"
-            @keyup.35="setLastSelected"
-            @keyup.36="setFirstSelected"
-            @keyup.esc="escapeHandler"
-            @blur="menuBlurHandler"
+      span.v-select__prepend(v-if="hasSlot('prepend')")
+        slot(name="prepend")
+      span.v-select__placeholder(v-if="(placeholder || hasSlot('placeholder')) && value === undefined || !optionsHasValue")
+        slot(
+          name="placeholder"
+          :placeholder="placeholder"
+          ) {{ placeholder }}
+      span.v-select__selected
+        slot(
+          v-if="value !== undefined && optionsHasValue"
+          :value="value"
+          :option="currentOption"
+          name="selected"
+          ) {{ currentOption ? currentOption.label : value }}
+      span.v-select__arrow
+        slot(name="arrow")
+          svg(viewBox="0 0 255 255")
+            path(d="M0 64l128 127L255 64z")
+    transition(
+      :name="transition ? transition.name : ''"
+      :mode="transition ? transition.mode : ''"
+      )
+      .v-select__menu(v-if="open")
+        ul.v-select__list(
+          v-if="options && options.length"
+          ref="list"
+          :aria-activedescendant="value && getOptionId(value)"
+          :aria-labelledby="labelId"
+          role="listbox"
+          tabindex="-1"
+          @keydown="keydownHandler"
+          @keyup.35="setLastSelected"
+          @keyup.36="setFirstSelected"
+          @keyup.esc="escapeHandler"
+          @blur="menuBlurHandler"
+          )
+          li.v-select__option(
+            v-for="(option, index) in options" :key="index"
+            :id="getOptionId(option)" role="option"
+            ref="options"
+            :class="{ 'v-select__option--selected': isSelected(option) }"
+            @click="clickHandler(option)" :aria-selected="isSelected(option) ? 'true': 'false'"
             )
-            li.v-select__option(
-              v-for="(option, index) in options" :key="index"
-              :id="getOptionId(option)" role="option"
-              ref="options"
-              :class="{ 'v-select__option--selected': isSelected(option) }"
-              @click="clickHandler(option)" :aria-selected="isSelected(option) ? 'true': 'false'"
+            slot(
+              name="option"
+              :option="option"
+              :value="value"
               )
-              slot(
-                name="option"
-                :option="option"
-                :value="value"
-                )
-                span {{ option.label }}
-          template(v-else)
-            .v-select__no-options
-              slot(name="no-optioms")
-                span No options provided
+              span {{ option.label }}
+        template(v-else)
+          .v-select__no-options
+            slot(name="no-optioms")
+              span No options provided
 </template>
 
 <script>
