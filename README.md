@@ -27,22 +27,21 @@ $ yarn add @jonasclement/vue-accessible-select
 
 ### As a plugin
 
-It must be called before `new Vue()`.
-
 ```js
-import Vue from 'vue'
+import { createApp } from 'vue'
 import VueAccessibleSelect from 'vue-accessible-select'
 
-Vue.use(VueAccessibleSelect)
+const app = createApp()
+app.use(VueAccessibleSelect)
 ```
 
 ### As a global component
 
 ```javascript
-import Vue from 'vue'
+import { createApp } from 'vue'
 import { VueAccessibleSelect } from 'vue-accessible-select'
 
-Vue.component('VueAccessibleSelect', VueAccessibleSelect)
+app.component('VueAccessibleSelect', VueAccessibleSelect)
 ```
 
 ### As a local component
