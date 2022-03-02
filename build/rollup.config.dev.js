@@ -1,7 +1,7 @@
 import path from 'path'
 import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
-import replace from 'rollup-plugin-replace'
+import replace from '@rollup/plugin-replace'
 
 import plugins from './base/plugins/index'
 
