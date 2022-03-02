@@ -3,13 +3,8 @@ import VueAccessibleSelect from './components/VueAccessibleSelect/VueAccessibleS
 import config from './config'
 
 const Plugin = {
-  install(Vue) {
-    // Make sure that plugin can be installed only once
-    if (this.installed) {
-      return
-    }
-
-    Vue.component('VueAccessibleSelect', VueAccessibleSelect)
+  install(app) {
+    app.component('VueAccessibleSelect', VueAccessibleSelect)
   },
 }
 

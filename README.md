@@ -27,22 +27,21 @@ $ yarn add @jonasclement/vue-accessible-select
 
 ### As a plugin
 
-It must be called before `new Vue()`.
-
 ```js
-import Vue from 'vue'
+import { createApp } from 'vue'
 import VueAccessibleSelect from 'vue-accessible-select'
 
-Vue.use(VueAccessibleSelect)
+const app = createApp()
+app.use(VueAccessibleSelect)
 ```
 
 ### As a global component
 
 ```javascript
-import Vue from 'vue'
+import { createApp } from 'vue'
 import { VueAccessibleSelect } from 'vue-accessible-select'
 
-Vue.component('VueAccessibleSelect', VueAccessibleSelect)
+app.component('VueAccessibleSelect', VueAccessibleSelect)
 ```
 
 ### As a local component
@@ -241,10 +240,14 @@ Type ahead:
 - Type a character: focus and selection moves to the next option with a label that starts with the typed character;
 - Type multiple characters in rapid succession: focus and selection moves to the next option with a label that starts with the string of characters typed.
 
+## Note for developers
+
+For this Vue 3-compatible version, the demo does not build correctly.
+
 ## Powered by
 
-- `Rollup` (and plugins);
-- `SASS` and `node-sass`;
+- `Vite`;
+- `SASS`
 - `PostCSS`;
 - `Autoprefixer`.
 
