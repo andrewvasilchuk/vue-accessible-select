@@ -31,15 +31,17 @@
   "types": "types/index.d.ts",
   "scripts": {
     "prepare": "npm run build",
-    "build": "rimraf dist/* && vite --mode production --config build/vite.config.js build && npm run build:css && npm run postcss",
+    "build": "rimraf dist/* && vite --mode production --config build/vite.config.prod.js build && npm run build:css && npm run postcss",
     "build:css": "sass src/styles:dist --no-source-map",
-    "dev": "vite --config build/vite.config.js",
+    "dev": "vite --config build/vite.config.dev.js",
     "postcss": "postcss ./dist/**/*.css -r --no-map",
     "test:unit": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
+    "@vitejs/plugin-vue": "^2.2.4",
+    "@vue/compiler-sfc": "^3.2.31",
     "autoprefixer": "^10.4.2",
     "babel-core": "^7.0.0-bridge.0",
     "postcss": "^8.4.5",
@@ -48,12 +50,11 @@
     "rimraf": "^3.0.2",
     "sass": "1.49.9",
     "vite": "^2.8.6",
-    "vite-plugin-vue2": "^1.9.3",
-    "vue": "^2.6.14",
-    "vue-template-compiler": "^2.6.14"
+    "vite-plugin-pug": "^0.3.0",
+    "vue": "^3.2.31"
   },
   "peerDependencies": {
-    "vue": "^2.6.14"
+    "vue": "^3.2.31"
   },
   "dependencies": {
     "keycode-js": "^3.1.0"
