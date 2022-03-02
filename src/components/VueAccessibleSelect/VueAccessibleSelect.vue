@@ -74,6 +74,16 @@
 </template>
 
 <script>
+import {
+  KEY_RETURN,
+  KEY_ESCAPE,
+  KEY_SPACE,
+  KEY_LEFT,
+  KEY_UP,
+  KEY_RIGHT,
+  KEY_DOWN,
+} from 'keycode-js'
+
 import config from '../../config'
 
 export default {
@@ -206,37 +216,33 @@ export default {
       this.open = false
     },
     keydownHandler(e) {
+      if (e.keyCode === KEY_ESCAPE) {
+        return
+      }
       // prevent from default scrolling
 
-      if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+      if (
+        [KEY_SPACE, KEY_LEFT, KEY_UP, KEY_RIGHT, KEY_DOWN].indexOf(e.keyCode) >
+        -1
+      ) {
         e.preventDefault()
       }
 
       const { currentOptionIndex, open } = this
 
       switch (e.keyCode) {
-        // Space
-        case 32:
-          if (!this.open) return (this.open = true)
+        case KEY_SPACE:
+          this.open = true
           break
-        // Arrow up
-        case 38:
-          if (!open) return (this.open = true)
-
-          if (currentOptionIndex > 0)
+        case KEY_UP:
+          if (currentOptionIndex !== 0)
             this.emit(this.options[currentOptionIndex - 1].value)
-          return
-        // Arrow down
-        case 40:
-          if (!open) return (this.open = true)
-
+          break
+        case KEY_DOWN:
           if (currentOptionIndex !== this.options.length - 1)
             this.emit(this.options[currentOptionIndex + 1].value)
-          return
-        // Enter
-        case 13:
-          if (!this.open) return
-
+          break
+        case KEY_RETURN:
           setTimeout(() => {
             this.open = false
             this.$refs.button.focus()
@@ -307,12 +313,20 @@ export default {
       }
     },
     buttonBlurHandler(e) {
-      if (e.relatedTarget !== this.$refs.list && this.open) {
+      let target = e.relatedTarget
+      if (target === null) {
+        target = document.activeElement
+      }
+      if (target !== this.$refs.list && this.open) {
         this.open = false
       }
     },
     menuBlurHandler(e) {
-      if (e.relatedTarget !== this.$refs.button) {
+      let target = e.relatedTarget
+      if (target === null) {
+        target = document.activeElement
+      }
+      if (target !== this.$refs.button) {
         this.open = false
       }
     },
