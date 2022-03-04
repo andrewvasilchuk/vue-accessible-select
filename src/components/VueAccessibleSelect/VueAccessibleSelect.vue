@@ -105,6 +105,7 @@ export default {
     placeholder: String,
     disabled: Boolean,
   },
+  emits: ['change', 'open', 'close', 'input'],
   data() {
     const _vm = getCurrentInstance()
     return {
