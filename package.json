@@ -1,6 +1,6 @@
 {
   "name": "@jonasclement/vue-accessible-select",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "private": false,
   "description": "Vue.js component for accessible selects",
   "keywords": [
