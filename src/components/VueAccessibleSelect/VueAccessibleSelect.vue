@@ -49,8 +49,8 @@
           role="listbox"
           tabindex="-1"
           @keydown="keydownHandler"
-          @keyup.35="setLastSelected"
-          @keyup.36="setFirstSelected"
+          @keyup.end="setLastSelected"
+          @keyup.home="setFirstSelected"
           @keyup.esc="escapeHandler"
           @blur="menuBlurHandler"
           )
@@ -85,6 +85,7 @@ import {
 } from 'keycode-js'
 
 import config from '../../config'
+import { getCurrentInstance } from 'vue'
 
 export default {
   name: 'VueAccessibleSelect',
@@ -105,13 +106,13 @@ export default {
     disabled: Boolean,
   },
   data() {
-    const { _uid } = this
-
+    const _vm = getCurrentInstance()
     return {
       open: false,
       timeout: null,
       printedText: '',
-      localId_: _uid,
+      localId_: _vm.uid,
+      _vm,
     }
   },
   computed: {
@@ -133,15 +134,15 @@ export default {
     currentOption() {
       return (
         Array.isArray(this.options) &&
-        this.options.find(option => option.value === this.value)
+        this.options.find((option) => option.value === this.value)
       )
     },
     currentOptionIndex() {
-      return this.options.findIndex(option => option === this.currentOption)
+      return this.options.findIndex((option) => option === this.currentOption)
     },
     optionsHasValue() {
       return (
-        this.options.findIndex(option => option.value === this.value) !== -1
+        this.options.findIndex((option) => option.value === this.value) !== -1
       )
     },
   },
@@ -181,13 +182,13 @@ export default {
   /*
    * SSR Safe Client Side ID attribute generation
    * id's can only be generated client side, after mount.
-   * this._uid is not synched between server and client.
+   * this.uid is not synched between server and client.
    */
   mounted() {
     this.$nextTick(() => {
       // Update dom with auto ID after dom loaded to prevent
       // SSR hydration errors.
-      this.localId_ = this._uid
+      this.localId_ = this._vm.uid
     })
   },
   methods: {
@@ -282,11 +283,7 @@ export default {
     },
     selectByText(text) {
       for (let option of this.shiftOptions(this.currentOptionIndex)) {
-        if (
-          String(option.label)
-            .toUpperCase()
-            .startsWith(text)
-        ) {
+        if (String(option.label).toUpperCase().startsWith(text)) {
           this.emit(option.value)
           return
         }
@@ -331,7 +328,7 @@ export default {
       }
     },
     hasSlot(name) {
-      return Boolean(this.$slots[name]) || Boolean(this.$scopedSlots[name])
+      return Boolean(this.$slots[name])
     },
     shiftOptions(selectedIndex) {
       const { options } = this
