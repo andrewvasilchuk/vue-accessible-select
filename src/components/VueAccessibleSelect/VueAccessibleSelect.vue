@@ -239,12 +239,14 @@ export default {
         case KEY_UP:
           if (currentOptionIndex !== 0)
             this.emit(this.options[currentOptionIndex - 1].value)
-          break
+          return
         case KEY_DOWN:
           if (currentOptionIndex !== this.options.length - 1)
             this.emit(this.options[currentOptionIndex + 1].value)
-          break
+          return
         case KEY_RETURN:
+          if (!this.open) return
+
           setTimeout(() => {
             this.open = false
             this.$refs.button.focus()
